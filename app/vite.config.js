@@ -15,6 +15,5 @@ export default defineConfig(({mode}) => {
     build: {
       outDir: '../'
     },
-    publicDir: './geomoose'
   }
 })
