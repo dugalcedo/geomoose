@@ -4,12 +4,14 @@
 <script>
     import { reactive, watch } from 'vue'
 
-    import countries from '/api/countries.js?url'
+    // import countries from '/api/countries.js?url'
+    import countries from './lib/data.js'
 
     let nameSort = (a,b) => a.name.localeCompare(b.name)
     let numSort = (a,b) => a-b
     let startsWith = (long, short) => long.toLowerCase().startsWith(short.toLowerCase())
-    let filtered = countries.toSorted(nameSort)
+    let filtered = [...countries]
+    filtered.sort(nameSort)
 
     export const store = reactive({
       countries,
@@ -60,7 +62,7 @@
 
     function sort(desc = store.filters.desc) {
       const key = store.filters.sort
-      store.filtered = store.filtered.toSorted((a,b) => {
+      store.filtered.sort((a,b) => {
         let A = desc == 'on' ? b[key] : a[key]
         let B = desc == 'on' ? a[key] : b[key]
         return typeof A === 'number' ? (A-B) : (A.localeCompare(B))
