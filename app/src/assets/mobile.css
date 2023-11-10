@@ -1,0 +1,17 @@
+@media screen and (max-width: 825px) {
+    #countries {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    main {
+        padding: 1rem;
+    }
+    #countries {
+        grid-template-columns: 1fr;
+    }
+    #country {
+        grid-template-columns: 1fr;
+    }
+}

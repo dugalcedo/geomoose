@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,800;1,900&family=Satisfy&display=swap');
+
+body, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    padding: .5rem;
+    border: 0;
+    border-radius: .5rem;
+    margin: .25rem;
+    background-color: var(--text);
+    color: var(--bg);
+}
+
+input {
+    padding: .5rem;
+    border-radius: .5rem;
+    margin: .25rem;
+    border: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    &:focus {
+        outline: 1px dashed var(--text);
+    }
+}
+
+body {
+    transition: all 125ms;
+
+    --bg: #f5f5f5;
+    --text: #101010;
+    --infoCard: rgba(0,0,0,0.1);
+    &.dark{
+        --bg: #0c0c0c;
+        --text: #f5f5f5;
+        --infoCard: rgba(255,255,255,0.1);
+    }
+
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+* {
+    margin: 0; 
+    box-sizing: border-box;
+    font-family: "Poppins", "Helvetica", sans-serif;
+}
+
+header {
+    padding: .75rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+main {
+    padding: 2rem;
+    width: 1200px;
+    max-width: 100%;
+    margin: auto;
+}
