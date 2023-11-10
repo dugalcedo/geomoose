@@ -1,0 +1,5 @@
+app/.gitignore
+app/pnpm-lock.yaml
+app/process.js
+app/.vscode
+app/node_modules
