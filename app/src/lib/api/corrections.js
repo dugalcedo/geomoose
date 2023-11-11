@@ -10,6 +10,7 @@ const corrections = {
             'Svalbard and Jan Mayen',
             'Sweden',
             'United States',
+            'Finland',
         ],
         "Southern Ocean": [
             'Bouvet Island',
@@ -408,11 +409,15 @@ corrections.regions = {
     ]
 }
 
-corrections.names = [
+corrections.name = [
     ['Åland Islands', 'Åland'],
     ['Eswatini', 'eSwatini'],
     ['Republic of the Congo', 'Congo-Brazzaville'],
     ['DR Congo', 'Congo-Kinshasa']
+]
+
+corrections.area = [
+    ['Svalbard and Jan Mayen', 61399]
 ]
 
 corrections.microRegions = {
@@ -435,7 +440,7 @@ corrections.microRegions = {
         'Iran',
         'Jordan'
     ],
-    "Scandinavia": ['Denmark', 'Norway', 'Sweden'],
+    "Scandinavia": ['Denmark', 'Norway', 'Sweden', 'Åland Islands'],
     "Iberian Peninsula": ['Spain', 'Portugal', 'Andorra'],
     "Low Countries": ['Belgium', 'Netherlands', 'Luxembourg'],
     'Balkan Peninsula': [
@@ -452,7 +457,20 @@ corrections.microRegions = {
     'Indochina': ['Vietnam', 'Cambodia', 'Laos', 'Thailand'],
     'Arabian Peninsula': ['Bahrain', 'Iraq', 'Jordan', 'Kuwait', 'Qatar', 'Oman', 'Yemen', 'Saudi Arabia', 'United Arab Imerates'],
     'Horn of Africa': ['Ethiopia', 'Eritrea', 'Djibouti', 'Somalia', 'Somaliland'],
-    'Baltic Countries': ['Lithuania', 'Latvia', 'Estonia']
+    'Baltic Countries': ['Lithuania', 'Latvia', 'Estonia'],
+    'Nordic Countries': ['Åland Islands', 'Sweden', 'Norway', 'Finland', 'Denmark', 'Greenland', 'Faroe Islands', 'Svalbard and Jan Mayen']
 }
+
+corrections.functions = [
+    (c)=>{
+        if (c.name.startsWith('Saint')) {
+            c.info.detail.Names['Alternate Spelling'].push(
+                'St'+c.name.slice(5),
+                'St.'+c.name.slice(5)
+            )
+        }
+        return c
+    }
+]
 
 export default corrections

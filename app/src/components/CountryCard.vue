@@ -1,4 +1,5 @@
 <script setup>
+import { store } from '../App.vue'
 import FieldSet from './FieldSet.vue'
 const props = defineProps(['country'])
 const { country } = props
@@ -9,7 +10,8 @@ const { country } = props
         :href="`#/country/`+country.name"
         :class="{
             countryCard: true,
-            independent: country.independent
+            dependent: !country.independent,
+            missingSortKey: country.missingSortKey
         }"
     >
         <div id="flag">
@@ -18,6 +20,9 @@ const { country } = props
         <div class="body">
             <h2>{{ country.name }}</h2>
             <FieldSet :info="country.info.intro" />
+        </div>
+        <div class="missing-alert">
+            {{ store.filters.sort }} missing
         </div>
     </a>
 </template>

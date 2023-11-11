@@ -48,23 +48,27 @@ function formatNumber(n) {
 export default function processor(data) {
     
     let countries = data.map(_c => {
-        const c = {}
+        let c = {}
         c.flag = _c.flags.png
         c.coat = _c.coatOfArms?.png || ""
         c.name = _c.name.common
-        c.population = _c.population
-        c.area = _c.area
+        c.population = _c.population || 0
+        c.area = _c.area || 0
+        c.gini = Object.values(_c.gini||{})[0] || 0
         c.region = []
         c.subregion = []
+        c.microregion = []
         Object.entries(corrections.subRegions).forEach(([sr, items]) => {
             if (items.includes(c.name)) c.subregion.push(sr)
         })
         Object.entries(corrections.regions).forEach(([r, items]) => {
             if (items.includes(c.name)) c.region.push(r)
         })
-        corrections.names.forEach(([current, newName]) => {
-            if (c.name === current) c.name = newName
+        Object.entries(corrections.microRegions).forEach(([mr, items]) => {
+            if (items.includes(c.name)) c.microregion.push(mr)
         })
+        ezCorrect('name')
+        ezCorrect('area')
         c.independent = _c.independent
         
         // other names
@@ -133,9 +137,18 @@ export default function processor(data) {
             "UN Member": _c.unMember ? "yes" : "no"
         }
 
+        corrections.functions.forEach(fn => {
+            c = fn(c)
+        })
+
         return c
         function getLang(code) {
             return _c.languages?.[code]
+        }
+        function ezCorrect(key) {
+            corrections[key].forEach(([current, newValue]) => {
+                if (c.name === current) c[key] = newValue
+            })
         }
     })
     return countries
