@@ -15,6 +15,19 @@ const router = createRouter({
   ]
 })
 
+router.afterEach((to, from)=>{
+  if (to.fullPath.includes('country')) {
+    window.prevScroll = window.scrollY
+    window.scrollTo(0,0)
+  } else {
+    if (window.prevScroll) {
+      setTimeout(() => {
+        window.scrollTo(0, window.prevScroll)
+      }, 500);
+    }
+  }
+})
+
 const app = createApp(App)
 app.use(router)
 app.mount('#app')
