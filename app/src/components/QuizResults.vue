@@ -1,69 +1,50 @@
 <script setup>
-import QuizCountdown from './QuizCountdown.vue'
-
-    const {results, dayDiff} = defineProps(['results', 'dayDiff'])
-    function userCountry(question) {
-        return question.a.find(a=>a.name==question.u)
-    }
-    function userAnswer(question) {
-        switch (question.type) {
-            case "capital":
-                return !question.reversed ? 
-                    userCountry(question).capital :
-                    question.u
-
-            case "flag":
-                return !question.reversed ? 
-                    `<img src="${userCountry(question).flag}" alt="">` :
-                    question.u
-
-            default:
-                return question.u
-
+    import QuizAnswer from './QuizAnswer.vue'
+    import QuizCountdown from './QuizCountdown.vue'
+    const {quiz, score} = defineProps(['quiz', 'score'])
+   
+    function display(uc) {
+        // console.log(uc)
+        if (typeof uc === 'string') {
+            if (uc.includes('//')) {
+                return `<img src="${uc}">`
+            } else return uc
+        } else {
+            return uc
         }
     }
-    function correctAnswer(question) {
-        switch (question.type) {
-            case "capital":
-                return !question.reversed ? 
-                    question.correct :
-                    question.country.name
-                
-            case "flag":
-                return !question.reversed ? 
-                        question.correct :
-                        question.country.name
 
-            default:
-                return question.u
-                
-        }
-    }
+    console.log(quiz)
+
 </script>
 
 <template>
-    <div id="completed-quiz">
-        <h2>Your score: {{ results.score }}/6</h2>
+    <div id="quiz-results">
+        <h2>Your score: {{ score }}/8</h2>
         <p>
-            You already completed today's quiz. <br>
-            Next quiz in: <QuizCountdown />
+            You've already taken today's quiz <br>
+            The next quiz is in: <QuizCountdown />
         </p>
-        <div v-for="question, qi in results[dayDiff]" class="quiz-answer">
-            <div class="q">
-                <div>{{ question.q }}</div>
-                <div v-if="question.type == 'flag' && question.reversed">
-                    <img :src="question.country.flag" alt="">
+        <div class="quiz-result" v-for="q, qi in quiz">
+            <div class="quiz-result_q">
+                <div class="text">
+                    {{ q.question }}
+                </div>
+                <div class="image" v-if="q.image">
+                    <img :src="q.image" alt="">
                 </div>
             </div>
-            <div class="a">
-                <div class="you-said" v-html="`You said: ${userAnswer(question)}`">
+            <div class="quiz-result_y quiz-result_x">
+                <div class="label">
+                    You said:
                 </div>
-                <div class="answer" v-html="`Answer: ${correctAnswer(question)}`">
-                </div>
-                <div class="result">
-                    <div v-if="question.uc" class="correct">CORRECT</div>
-                    <div v-else class="incorrect">INCORRECT</div>
-                </div>
+                <div class="userChoice" v-html="display(q.userChoice)"></div>
+            </div>
+            <div class="quiz-result_a quiz-result_x">
+                <QuizAnswer :answer="q.answer" />
+            </div>
+            <div class="quiz-result_x quiz-result_c">
+                {{ q.correct ? "CORRECT" : "INCORRECT" }}
             </div>
         </div>
     </div>

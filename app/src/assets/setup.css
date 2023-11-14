@@ -15,6 +15,7 @@ body {
     --correct: rgb(0, 130, 54);
     --incorrect: rgb(159, 0, 0);
     --texta: #454545;
+    --textx: rgba(0,0,0,0.1);
     &.dark{
         --bg: #0c0c0c;
         --bgt: #0c0c0c99;
@@ -22,6 +23,7 @@ body {
         --textt: #f5f5f599;
         --texta: #ababab;
         --infoCard: rgba(255,255,255,0.1);
+        --textx: rgba(255,255,255,0.1);
     }
 
     background-color: var(--bg);

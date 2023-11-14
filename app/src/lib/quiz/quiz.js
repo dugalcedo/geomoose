@@ -1,4 +1,7 @@
-import countries from '../data.js'
+import _countries from '../data.js'
+const countries = _countries.filter(c => {
+    return !(['Antarctica', 'Bouvet Island', 'Heard Island and McDonald Islands']).includes(c.name)
+})
 
 function capitalize(str) {
     return str[0].toUpperCase() + str.slice(1).toLowerCase()
@@ -25,28 +28,39 @@ function getRandomWrongAnswers(amt, country) {
     return answers.length > 1 ? answers : answers[0]
 }
 
+function getIncorrect(country, answers) {
+    return answers.filter(a=>a.name!==country.name)
+}
+
+function multipleCorrectAnswers(country, key) {
+    const corrects = quizBot.thresholds[key].filter(t=>{
+        const [text, hi, lo] = t
+        return (country[key]>=lo)&&
+               (country[key]<=hi)
+    })
+    return corrects.filter(c=>c[0])
+}
+
 const quizBot = {}
 
 quizBot.thresholds = {}
 
 quizBot.thresholds.population = [
-    [100_000_000, 1_500_000_000, '100m-1.5b'],
-    [90_000_000, 200_000_000, '90m-200m'],
-    [45_000_000, 120_000_000, '45m-120m'],
-    [9_000_000, 55_000_000, '9m-55m'],
-    [900_000, 11_000_000, '900k-11m'],
-    [0, 1_000_000, '1m or less']
+    ['Massive (200m - 1.5b)', 1_500_000_000, 150_000_000],
+    ['Very large (75m - 200m)', 200_000_000, 75_000_000],
+    ['Large (40m - 100m)', 100_000_000, 40_000_000],
+    ['Medium (7.5m - 50m)', 50_000_000, 7_500_000],
+    ['Small (750k - 10m)', 10_000_000, 750_000],
+    ['Very small (less than 1m)', 1_000_000, 0]
 ]
 
 quizBot.thresholds.area = [
-    [2_000_000, 17_100_000, '2m-17.1m km²'],
-    [900_000, 3_500_000, '900k-3.5m km²'],
-    [450_000, 1_000_000, '450k-1m km²'],
-    [225_000, 500_000, '275k-500k km²'],
-    [75_000, 250_000, '75k-250k km²'],
-    [20_000, 100_000, '20k-100k km²'],
-    [2500, 25_000, '2.5k-25k km²'],
-    [0, 5000, '5k km² or less']
+    ['Massive (5m - 17.1m km²)', 17_200_000, 5_000_000],
+    ['Very large (1.2m - 5m km²)', 5_000_000, 1_200_000],
+    ['Large (500k - 1.5 km²)', 1_500_000, 500_000],
+    ['Medium (150k - 600k km²)', 600_000, 150_000],
+    ['Small (20k - 200k km²)', 200_000, 20_000],
+    ['Very small (less than 25k km²)', 25_000, 0]
 ]
 
 
@@ -77,8 +91,8 @@ quizBot.generateRandomQuizSeed = (schema = {
     flag: 1,
     "capital:r": 1,
     "flag:r": 1,
-    population: 0,
-    area: 0,
+    population: 1,
+    area: 1,
     "population:r": 1,
     "area:r": 1
 }) => {
@@ -110,49 +124,62 @@ const typeMap = {
 quizBot.parser = {}
 
 quizBot.parser.flag = (question, country, answers, reversed = false) => {
-    question.q = reversed ? 
-        `Which country does this flag belong to?` :
-        `Which of these is the flag of ${country.name}?`
-    question.a = answers
-    question.correct = `<img src="${country.flag}" alt="">`
-    question.v = cn => cn === country.name
+    if (reversed) {
+        question.question = `Which country does this flag belong to?`
+        question.image = country.flag
+        question.choices = answers.map(a=>a.name)
+        question.answer = country.name
+    } else {
+        question.question = `Which of these is the flag of ${country.name}?`
+        question.choices = answers.map(a=>a.flag)
+        question.answer = country.flag
+    }
     return question
 }
 
 quizBot.parser.capital = (question, country, answers, reversed = false) => {
-    question.correct = randomArr(country.capital)
-    question.q = reversed ? 
-        `Which country has a capital called "${question.correct}"?` :
-        `Which of these is a capital of ${country.name}?`
-    question.a = answers
-    question.v = cn => cn === country.name
+    if (reversed) {
+        const capital = randomArr(country.capital)
+        question.answer = country.name
+        question.question = `Which country has a capital called "${capital}"?`
+        question.choices = answers.map(a=>a.name)
+    } else {
+        question.question = `Which of these is a capital of ${country.name}?`
+        const capitals = {
+            correct: randomArr(country.capital),
+            incorrect: getIncorrect(country, answers).map(a=>randomArr(a.capital))
+        }
+        question.answer = capitals.correct
+        question.choices = [capitals.correct, ...capitals.incorrect]
+    }
+
     return question
 }
 
 quizBot.parser.population = (question, country, answers, reversed = false) => {
-    question.q = reversed ? 
-        `True or false: ${country.name} has a higher population than ${answers[0].name}` :
-        `The population of ${country.name} lies within which range? (There can sometimes be two correct answers)`
-    question.a = answers[0]
-    question.correct = country.population>=answers[0].population
-    question.v = bool => {
-        return reversed ?
-            bool === (question.correct) :
-            false
+    if (reversed) {
+        const incorrect = randomArr(getIncorrect(country, answers))
+        question.question = `True or false: ${country.name} has a higher population than ${incorrect.name}`
+        question.choices = [true, false]
+        question.answer = country.population > incorrect.population
+    } else {
+        question.question = `The population of ${country.name} is...? (There can sometimes be two correct answers)`
+        question.choices = quizBot.thresholds.population.map(t=>t[0])
+        question.answer = multipleCorrectAnswers(country, 'population')
     }
     return question
 }
 
 quizBot.parser.area = (question, country, answers, reversed = false) => {
-    question.q = reversed ? 
-        `True or false: ${country.name} has a larger area than ${answers[0].name}` :
-        `The area of ${country.name} lies within which range? (There can sometimes be two correct answers)`
-    question.a = answers[0]
-    question.correct = country.area>=answers[0].area
-    question.v = bool => {
-        return reversed ?
-            bool === (question.correct) :
-            false
+    if (reversed) {
+        const incorrect = randomArr(getIncorrect(country, answers))
+        question.question = `True or false: ${country.name} has a larger area than ${incorrect.name}`
+        question.choices = [true, false]
+        question.answer = country.area > incorrect.area
+    } else {
+        question.question = `The area of ${country.name} is...? (There can sometimes be two correct answers)`
+        question.choices = quizBot.thresholds.area.map(t=>t[0])
+        question.answer = multipleCorrectAnswers(country, 'area')
     }
     return question
 }
