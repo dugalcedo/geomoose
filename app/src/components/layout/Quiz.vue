@@ -41,6 +41,7 @@
         quizData[dayDiff] = quiz.value
         quizData.score = score
         localStorage.setItem('geoMoose-completed', JSON.stringify(quizData))
+        window.location.reload()
     }
 </script>
 
