@@ -60,7 +60,7 @@
             <div class="q">
                 <div>{{ question.q }}</div>
                 <div v-if="question.type == 'flag' && question.reversed">
-                    <img :src="question.country.flag" alt="">
+                    <img :src="question.country.flag" alt="" class="single-flag">
                 </div>
             </div>
 

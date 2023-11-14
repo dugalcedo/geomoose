@@ -28,7 +28,7 @@
 
 <template>
     <form id="search-bar" v-on:input="handleInput">
-        <div class="field">
+        <div class="field search">
             <input
             type="text"
             placeholder="Search"

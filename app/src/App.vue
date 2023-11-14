@@ -2,6 +2,7 @@
   import Header from './components/layout/Header.vue'
 </script>
 <script>
+
     import { reactive, watch } from 'vue'
 
     // import countries from './lib/api/countries.js?url'
@@ -22,10 +23,15 @@
     
     filtered.sort(nameSort)
 
+    const theme = localStorage.getItem('geoMoose-theme')
+    function setTheme() {
+      document.body.classList = store.dark ? "dark" : ""
+    }
+
     export const store = reactive({
       countries,
       filtered,
-      dark: false,
+      dark: theme==='true'?true:false,
       filters: {
         sort: 'name',
         desc: 'off',
@@ -35,12 +41,11 @@
       }
     })
 
+    setTheme()
     filterDep()
     sort()
 
-    watch(() => store.dark, dark=>{
-        document.body.classList = dark ? "dark" : ""
-    })
+    watch(() => store.dark, setTheme)
     watch(() => store.filters.reg, reg => {
       if (reg === 'all') {
         store.filtered = [...store.countries]

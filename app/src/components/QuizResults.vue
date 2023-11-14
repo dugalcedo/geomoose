@@ -32,7 +32,7 @@ import QuizCountdown from './QuizCountdown.vue'
             case "flag":
                 return !question.reversed ? 
                         question.correct :
-                        question.u
+                        question.country.name
 
             default:
                 return question.u

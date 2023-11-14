@@ -1,5 +1,9 @@
 <script setup>
     import { store } from '../../App.vue'
+    function toggleTheme() {
+        store.dark = !store.dark
+        localStorage.setItem('geoMoose-theme', store.dark)
+    }
 </script>
 
 <template>
@@ -10,7 +14,7 @@
                 Today's quiz
             </button>
         </a>
-        <button @click="store.dark = !store.dark">
+        <button v-on:click="toggleTheme">
             {{ store.dark ? "Light" : "Dark" }} mode
         </button>
     </header>
