@@ -9,8 +9,17 @@
 
     let nameSort = (a,b) => a.name.localeCompare(b.name)
     let numSort = (a,b) => a-b
-    let startsWith = (long, short) => long.replaceAll('.','').toLowerCase().startsWith(short.replaceAll('.','').toLowerCase())
+    let startsWith = (long, short) => spell(long).startsWith(spell(short))
     let filtered = [...countries]
+
+    function spell(str) {
+      let remove = ['.','.',"'"]
+      for (let char of remove) {
+        str = str.replaceAll(char, '')
+      }
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    }
+    
     filtered.sort(nameSort)
 
     export const store = reactive({

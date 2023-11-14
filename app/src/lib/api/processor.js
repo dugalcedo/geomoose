@@ -49,9 +49,11 @@ export default function processor(data) {
     
     let countries = data.map(_c => {
         let c = {}
+        c.cca2 = _c.cca2
         c.flag = _c.flags.png
         c.coat = _c.coatOfArms?.png || ""
         c.name = _c.name.common
+        c.capital = _c.capital || "None"
         c.population = _c.population || 0
         c.area = _c.area || 0
         c.gini = Object.values(_c.gini||{})[0] || 0
@@ -89,6 +91,7 @@ export default function processor(data) {
         // c.info.intro.name = c.name
         c.info.intro.capital = _c.capital || "None"
         c.info.intro.population = formatNumber(_c.population)
+        c.info.intro.area = formatNumber(c.area) + 'km²'
         c.info.intro.region = c.region
         c.info.intro.subregion = c.subregion
         
@@ -147,7 +150,12 @@ export default function processor(data) {
         }
         function ezCorrect(key) {
             corrections[key].forEach(([current, newValue]) => {
-                if (c.name === current) c[key] = newValue
+                if (c.name === current) {
+                    if (key == 'name') {
+                        _c.altSpellings.push(c.name)
+                    }
+                    c[key] = newValue
+                }
             })
         }
     })

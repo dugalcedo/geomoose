@@ -6,12 +6,14 @@ import './assets/style.css'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './components/layout/Home.vue'
 import Country from './components/layout/Country.vue'
+import Quiz from './components/layout/Quiz.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {path: '/', component: Home},
-    {path: '/country/:name', component: Country}
+    {path: '/country/:name', component: Country},
+    {path: '/quiz', component: Quiz}
   ]
 })
 

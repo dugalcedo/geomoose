@@ -35,6 +35,8 @@ body {
     --bg: #f5f5f5;
     --text: #101010;
     --infoCard: rgba(0,0,0,0.1);
+    --correct: rgb(0, 130, 54);
+    --incorrect: rgb(159, 0, 0);
     &.dark{
         --bg: #0c0c0c;
         --text: #f5f5f5;

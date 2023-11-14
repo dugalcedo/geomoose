@@ -35,8 +35,9 @@ const corrections = {
             'Mauritius',
             'Seychelles',
             'Sri Lanka',
+            'Timor-Leste'
         ],
-        "Australia & New Zealand": [
+        "Australasia": [
             'Australia',
             'Christmas Island',
             'Cocos (Keeling) Islands',
@@ -267,6 +268,7 @@ const corrections = {
             'Singapore',
             'Thailand',
             'Vietnam',
+            'Timor-Leste'
         ],
         "Southern Asia": [
             "Afghanistan",
@@ -395,7 +397,7 @@ corrections.regions = {
         ...corrections.subRegions['Polynesia'],
         ...corrections.subRegions['Micronesia'],
         ...corrections.subRegions['Melanesia'],
-        ...corrections.subRegions['Australia & New Zealand'],
+        ...corrections.subRegions['Australasia'],
     ],
     "Antarctic": [
         ...corrections.subRegions['Antarctica'],
@@ -413,7 +415,8 @@ corrections.name = [
     ['Åland Islands', 'Åland'],
     ['Eswatini', 'eSwatini'],
     ['Republic of the Congo', 'Congo-Brazzaville'],
-    ['DR Congo', 'Congo-Kinshasa']
+    ['DR Congo', 'Congo-Kinshasa'],
+    ['Turkey', 'Türkiye']
 ]
 
 corrections.area = [
