@@ -1,6 +1,7 @@
 <script setup>
     import FieldSet from './FieldSet.vue'
     let {left, right = "", colon} = defineProps(['left', 'right', 'colon'])
+    console.log(left, right)
     const isPlural = (typeof right !== 'string') && right.length > 1
     function plural() {
         if (!isPlural) {

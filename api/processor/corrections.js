@@ -10,6 +10,7 @@ const corrections = {
             'Svalbard and Jan Mayen',
             'Sweden',
             'United States',
+            'Finland'
         ],
         "Southern Ocean": [
             'Bouvet Island',

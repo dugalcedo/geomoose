@@ -115,8 +115,11 @@
             <select name="sort" :value="store.filters.sort">
                 <option value="name">Name</option>
                 <option value="population">Population</option>
+                <option value="density">Population density</option>
                 <option value="area">Area</option>
                 <option value="gini">Gini coefficient</option>
+                <option value="temp">Average temp</option>
+                <option value="independence">Independence</option>
             </select>
         </div>
 

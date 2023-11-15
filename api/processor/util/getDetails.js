@@ -35,6 +35,7 @@ export default function getDetails(c, _c) {
         "Alternate Spelling": _c.altSpellings
     }
 
+    c.density = _c.population/_c.area
     
     c.info.detail['People'] = {
         Population: formatNumber(_c.population),
@@ -42,6 +43,7 @@ export default function getDetails(c, _c) {
         Language: Object.entries(_c.languages||{}).map(l=>l[1]),
         Demonym: _c.demonyms?.eng
     }
+
 
     c.info.detail['Economy & Infrastructure'] = {
         "Top Level domain": _c.tld,

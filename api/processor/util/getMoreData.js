@@ -16,6 +16,9 @@ function addField(c, name, detailKey, filePath, dataKey, trim) {
             }
         }
     })
+    if (c.info.detail[detailKey][name].length < 2) {
+        c.info.detail[detailKey][name] = c.info.detail[detailKey][name][0] || ""
+    }
 }
 function splitAndTrim(str) {
     if (typeof str !== 'string') return str
@@ -38,6 +41,7 @@ export default function getMoreData(c) {
         'country-by-independence-date',
         'independence'
     )
+    c.independence = Number(c.info.detail.Politics.Independence)
     addField(
         c,
         'Most common religion',
@@ -61,4 +65,5 @@ export default function getMoreData(c) {
         'country-by-yearly-average-temperature',
         'temperature'
     )
+    c.temp = Number(c.info.detail.Geography['Average temp'])
 }
