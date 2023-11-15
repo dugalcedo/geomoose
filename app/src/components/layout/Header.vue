@@ -8,7 +8,9 @@
 
 <template>
     <header>
-        <h1>GeoMoose</h1>
+        <a href="#/">
+            <h1>GeoMoose</h1>
+        </a>
         <a href="#/quiz">
             <button>
                 Today's quiz

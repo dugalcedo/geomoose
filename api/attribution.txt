@@ -1,0 +1,6 @@
+samayo/country-json
+    government types
+    independence dates
+    national dish
+    religion
+    avg temp

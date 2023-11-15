@@ -1,5 +1,5 @@
 import api from "./api.js"
-import processor from "./processor.js"
+import processor from "./processor/index.js"
 
 let countries = processor(api)
 

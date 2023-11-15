@@ -5,8 +5,8 @@
 
     import { reactive, watch } from 'vue'
 
-    // import countries from './lib/api/countries.js?url'
     import countries from './lib/data.js'
+    // console.log(countries.find(c=>c.name=="South Africa"))
 
     let nameSort = (a,b) => a.name.localeCompare(b.name)
     let numSort = (a,b) => a-b
@@ -37,7 +37,8 @@
         desc: 'off',
         q: '',
         reg: 'all',
-        dep: 'off'
+        dep: 'off',
+        rel: 'all'
       }
     })
 
@@ -60,6 +61,19 @@
       })
       sort()
     })
+    // watch(() => store.filters.rel, rel => {
+    //   if (rel === 'all') {
+    //     store.filtered = [...store.countries]
+    //     sort()
+    //     return
+    //   }
+    //   store.filtered = store.countries.filter(c => {
+    //     let match = false
+    //     if (c.religion.includes(rel)) match = true
+    //     return match
+    //   })
+    //   sort()
+    // })
     watch(() => store.filters.q, q => {
       store.filtered = store.countries.filter(c => {
         let match = false
@@ -115,6 +129,10 @@
 
     function checkMissingKey(c) {
       c.missingSortKey = !c[store.filters.sort]
+    }
+
+    function showAll() {
+
     }
 
 </script>
