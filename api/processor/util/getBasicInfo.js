@@ -8,4 +8,6 @@ export default function getBasicInfo(c, _c) {
     c.subregion = []
     c.microregion= []
     c.independent = _c.independent
+    c.cca2 = _c.cca2
+    c.capital = _c.capital
 }

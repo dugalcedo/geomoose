@@ -1,7 +1,4 @@
-import _countries from '../data.js'
-const countries = _countries.filter(c => {
-    return !(['Antarctica', 'Bouvet Island', 'Heard Island and McDonald Islands']).includes(c.name)
-})
+import countries from '../data.js'
 
 function capitalize(str) {
     return str[0].toUpperCase() + str.slice(1).toLowerCase()
