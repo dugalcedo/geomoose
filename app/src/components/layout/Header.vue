@@ -11,13 +11,15 @@
         <a href="#/">
             <h1>GeoMoose</h1>
         </a>
-        <a href="#/quiz">
-            <button>
-                Today's quiz
+        <div>
+            <a href="#/quiz">
+                <button>
+                    Today's quiz
+                </button>
+            </a>
+            <button v-on:click="toggleTheme">
+                {{ store.dark ? "Light" : "Dark" }} mode
             </button>
-        </a>
-        <button v-on:click="toggleTheme">
-            {{ store.dark ? "Light" : "Dark" }} mode
-        </button>
+        </div>
     </header>
 </template>

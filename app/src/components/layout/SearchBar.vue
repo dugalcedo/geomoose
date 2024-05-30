@@ -67,7 +67,7 @@
             type="checkbox"
             name="desc"
             :checked="store.filters.desc == 'on'"
-            > descending
+            > desc
         </div>
 
         <div class="field">
@@ -75,7 +75,7 @@
             type="checkbox" 
             :checked="store.filters.dep == 'on'"
             name="dep"> 
-            Show dependencies
+            non-UN
         </div>
 
         <div class="field">
@@ -111,7 +111,7 @@
         </div> -->
 
         <div class="field">
-            Sort by:
+            Sort:
             <select name="sort" :value="store.filters.sort">
                 <option value="name">Name</option>
                 <option value="population">Population</option>
