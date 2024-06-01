@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
 function readJSON(fileName) {
-    return JSON.parse(readFileSync(`../api/more-data/${fileName}.json`))
+    return JSON.parse(readFileSync(`D:/Webdev/GeoMoose/api/more-data/${fileName}.json`))
 }
 function addField(c, name, detailKey, filePath, dataKey, trim) {
     let data = readJSON(filePath)

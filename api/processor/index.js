@@ -3,7 +3,8 @@ import {
     makeCorrections,
     getNames,
     getDetails,
-    getMoreData
+    getMoreData,
+    makeGay
 } from './util/index.js'
 
 export default function processor(data) {
@@ -15,6 +16,7 @@ export default function processor(data) {
         getNames(c, _c)
         getDetails(c, _c)
         getMoreData(c)
+        makeGay(c)
         return c
     })
     return countries

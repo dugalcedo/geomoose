@@ -3,6 +3,7 @@ import getDetails from './getDetails.js'
 import getNames from './getNames.js'
 import makeCorrections from './makeCorrections.js'
 import getMoreData from './getMoreData.js'
+import makeGay from './makeGay.js'
 import {
     arrayFromObj,
     getCallingCodes,
@@ -18,5 +19,6 @@ export {
     arrayFromObj,
     getCallingCodes,
     formatNumber,
-    getMoreData
+    getMoreData,
+    makeGay
 }
